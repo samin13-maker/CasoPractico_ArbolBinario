@@ -23,7 +23,7 @@ public class Principal {
                     mostrarEstadisticas();
                     break;
                 case 4:
-                    System.out.println("Saliendo... ¡Hasta luego!");
+                    System.out.println("Saliendo...");
                     salir = true;
                     break;
                 default:
@@ -48,7 +48,6 @@ public class Principal {
         System.out.println("== Agregar participante ==");
 
         int matricula = leerInt("Matrícula (entero): ");
-        // validar matrícula positiva
         if (matricula <= 0) {
             System.out.println("Matrícula inválida. Debe ser un número entero positivo.");
             return;
