@@ -15,21 +15,23 @@ public class ArbolBinario {
     }
 
     private boolean insertarRec(Nodo actual, Persona p) {
-        if (p.getMatricula() == actual.dato.getMatricula()) {
+        if (p.getMatricula() == actual.getDato().getMatricula()) {
             return false; 
-        } else if (p.getMatricula() < actual.dato.getMatricula()) {
-            if (actual.izq == null) {
-                actual.izq = new Nodo(p);
+        } 
+        else if (p.getMatricula() < actual.getDato().getMatricula()) {
+            if (actual.getIzq() == null) {
+                actual.setIzq(new Nodo(p));
                 return true;
             } else {
-                return insertarRec(actual.izq, p);
+                return insertarRec(actual.getIzq(), p);
             }
-        } else { 
-            if (actual.der == null) {
-                actual.der = new Nodo(p);
+        } 
+        else { 
+            if (actual.getDer() == null) {
+                actual.setDer(new Nodo(p));
                 return true;
             } else {
-                return insertarRec(actual.der, p);
+                return insertarRec(actual.getDer(), p);
             }
         }
     }
@@ -38,16 +40,17 @@ public class ArbolBinario {
         if (raiz == null) {
             System.out.println("El árbol está vacío.");
         } else {
-            System.out.println("Participantes (por matrícula):");
+            System.out.println("\nParticipantes (Inorden por matrícula):");
             inordenRec(raiz);
         }
     }
 
     private void inordenRec(Nodo nodo) {
         if (nodo != null) {
-            inordenRec(nodo.izq);
-            System.out.println("Matricula: " + nodo.dato.getMatricula() + " | Categoria: " + nodo.dato.getCategoria());
-            inordenRec(nodo.der);
+            inordenRec(nodo.getIzq());
+            System.out.println("Matrícula: " + nodo.getDato().getMatricula() + 
+                               " | Categoría: " + nodo.getDato().getCategoria());
+            inordenRec(nodo.getDer());
         }
     }
 
@@ -61,23 +64,20 @@ public class ArbolBinario {
 
     private void recorrerYContar(Nodo nodo, Estadisticas est) {
         if (nodo == null) return;
-        recorrerYContar(nodo.izq, est);
+        recorrerYContar(nodo.getIzq(), est);
 
         est.totalParticipantes++;
-        est.sumaEdades += nodo.dato.getEdad();
-        String cat = nodo.dato.getCategoria().toLowerCase();
+        est.sumaEdades += nodo.getDato().getEdad();
 
-        if (cat.equals("principiante")) {
-            est.countPrincipiante++;
-        } else if (cat.equals("intermedio")) {
-            est.countIntermedio++;
-        } else if (cat.equals("avanzado")) {
-            est.countAvanzado++;
-        } else {
-            est.countOtros++;
+        String cat = nodo.getDato().getCategoria().toLowerCase();
+        switch(cat) {
+            case "principiante": est.countPrincipiante++; break;
+            case "intermedio":   est.countIntermedio++;   break;
+            case "avanzado":     est.countAvanzado++;     break;
+            default: est.countOtros++; break;
         }
 
-        recorrerYContar(nodo.der, est);
+        recorrerYContar(nodo.getDer(), est);
     }
 
     public static class Estadisticas {
@@ -92,21 +92,17 @@ public class ArbolBinario {
         void calcularPromedio() {
             if (totalParticipantes > 0) {
                 promedioEdad = (double) sumaEdades / totalParticipantes;
-            } else {
-                promedioEdad = 0.0;
             }
         }
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Total participantes: ").append(totalParticipantes).append("\n");
-            sb.append(String.format("Promedio de edad: %.2f\n", promedioEdad));
-            sb.append("Principiante: ").append(countPrincipiante).append("\n");
-            sb.append("Intermedio: ").append(countIntermedio).append("\n");
-            sb.append("Avanzado: ").append(countAvanzado).append("\n");
-            if (countOtros > 0) sb.append("Otros: ").append(countOtros).append("\n");
-            return sb.toString();
+            return "\nTotal participantes: " + totalParticipantes +
+                   "\nPromedio de edad: " + String.format("%.2f", promedioEdad) +
+                   "\nPrincipiantes: " + countPrincipiante +
+                   "\nIntermedios: " + countIntermedio +
+                   "\nAvanzados: " + countAvanzado +
+                   (countOtros > 0 ? "\nOtros: " + countOtros : "");
         }
     }
 }
