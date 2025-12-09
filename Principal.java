@@ -5,7 +5,7 @@ public class Principal {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("=== Concurso de Programación - Gestión de Participantes (Consola) ===");
+        System.out.println("=== Concurso de Programación - Gestión de Participantes ===");
         boolean salir = false;
 
         while (!salir) {
@@ -38,8 +38,8 @@ public class Principal {
     private static void mostrarMenu() {
         System.out.println("-------------------------------------------------");
         System.out.println("1. Agregar participante");
-        System.out.println("2. Visualizar matrícula y categoría de todos los participantes (Inorden)");
-        System.out.println("3. Visualizar estadísticas (promedio edad y cantidad por categoría)");
+        System.out.println("2. Visualizar matrícula y categoría de todos los participantes");
+        System.out.println("3. Visualizar estadísticas");
         System.out.println("4. Salir");
         System.out.println("-------------------------------------------------");
     }
@@ -60,7 +60,7 @@ public class Principal {
             return;
         }
 
-        int edad = leerInt("Edad (años): ");
+        int edad = leerInt("Edad: ");
         if (edad <= 0) {
             System.out.println("Edad inválida. Debe ser un número entero positivo.");
             return;
@@ -76,7 +76,7 @@ public class Principal {
     }
 
     private static String leerCategoria() {
-        System.out.println("Categorías disponibles:");
+        System.out.println("Categorías:");
         System.out.println("1. Principiante");
         System.out.println("2. Intermedio");
         System.out.println("3. Avanzado");

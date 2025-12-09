@@ -38,7 +38,7 @@ public class ArbolBinario {
         if (raiz == null) {
             System.out.println("El árbol está vacío.");
         } else {
-            System.out.println("Participantes (Inorden, por matrícula):");
+            System.out.println("Participantes (por matrícula):");
             inordenRec(raiz);
         }
     }
